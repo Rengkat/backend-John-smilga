@@ -22,6 +22,23 @@ app.get("/api/products/:id", (req, res) => {
     res.send(product);
   }
 });
+//query
+app.get("/api/v1/query", (req, res) => {
+  const { search, limit } = req.query;
+  let sortedProducts = [...products];
+  if (search) {
+    sortedProducts = sortedProducts.filter((pro) => {
+      return pro.name.startsWith(search);
+    });
+  }
+  if (limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit));
+  }
+  if (sortedProducts.length < 1) {
+    return res.status(200).send({ success: true, message: "No product of such term" });
+  }
+  res.status(200).json(sortedProducts);
+});
 app.all("*", (req, res) => {
   res.status(404).send("Sorry, 404 error");
 });
