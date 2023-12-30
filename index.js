@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const { people } = require("./data");
 
-app.use(express.static("./methods-public"));
+app.use(express.static("./methods-public")); //middleware for static pages
 app.use(express.urlencoded({ extended: false })); //middleware to add the user obj to the req body
 app.use(express.json()); //middleware for jason data
 app.post("/login", (req, res) => {
@@ -32,5 +32,24 @@ app.post("/api/postman/people", (req, res) => {
     res.status(400).json({ success: false, msg: "Please enter name" });
   }
   res.status(200).json({ success: true, data: [...people, name] });
+});
+app.put("/api/people/:id", (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ success: false, msg: "Please enter name" });
+  } else {
+    const person = people.find((x) => x.id === Number(id));
+    person.name = name;
+    //or
+    const newPeople = people.map((person) => {
+      if (person.id === Number(id)) {
+        return (person.name = name);
+      }
+      return person;
+    });
+    return res.status(200).json({ success: true, data: people });
+    // or res.status(200).json({ success: true, data: newPeople });
+  }
 });
 app.listen(3000, () => console.log("listing on port 3000"));
