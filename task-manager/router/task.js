@@ -8,6 +8,6 @@ router.patch("/:id", editTask);
 router.delete("/:id", deleteTask);
 
 //or
-router.route("/").get(getTasks).post(createTask);
-router.route("/:id").get(getTask).patch(editTask).delete(deleteTask);
+// router.route("/").get(getTasks).post(createTask);
+// router.route("/:id").get(getTask).patch(editTask).delete(deleteTask);
 module.exports = router;
