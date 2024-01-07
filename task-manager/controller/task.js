@@ -3,13 +3,22 @@ const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({});
     res.status(200).json({ tasks });
-    res.status(200).json({ success: true, data: "All task" });
   } catch (error) {
     res.status(404).json({ msg: error });
   }
 };
-const getTask = (req, res) => {
-  res.send("Hello get a task");
+const getTask = async (req, res) => {
+  try {
+    const { id: taskID } = req.params;
+    const singleTask = await Task.findOne({ _id: taskID });
+    if (!singleTask) {
+      return res.status(4040).json({ msg: `no task with id ${taskID}` });
+    } else {
+      res.status(200).json({ task: singleTask });
+    }
+  } catch (error) {
+    res.status(4040).json({ msg: error });
+  }
 };
 const createTask = async (req, res) => {
   try {
