@@ -1,5 +1,6 @@
 const connectDB = require("./db/connect");
 const express = require("express");
+const notFound = require("./middleware/not-found");
 const app = express();
 require("dotenv").config();
 const tasks = require("./router/task");
@@ -8,6 +9,7 @@ app.use(express.static("./public"));
 app.use(express.json());
 //routes
 app.use("/api/v1/tasks", tasks);
+app.use(notFound);
 const start = async () => {
   try {
     await connectDB(process.env.MANGO_URI);
