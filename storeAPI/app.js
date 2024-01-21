@@ -16,6 +16,8 @@ const start = async () => {
   try {
     await connectDB(process.env.MANGO_URI);
     app.listen(port, () => console.log("Server running on port 3000"));
-  } catch (error) {}
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 start();
