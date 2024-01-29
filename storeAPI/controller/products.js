@@ -12,7 +12,7 @@ const getProducts = async (req, res) => {
   if (name) {
     queryObj.name = { $regex: name, $options: "i" }; //using regex to fine product by name that contains the letter from the query
   }
-  const products = await Products.find(queryObj);
+  const products = await Products.find(queryObj).sort("-name price");
   res.status(200).json({ success: true, data: products });
 };
 module.exports = { getProducts };
