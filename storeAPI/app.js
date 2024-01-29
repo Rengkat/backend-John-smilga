@@ -5,7 +5,7 @@ require("dotenv").config();
 const connectDB = require("./db/connect");
 const Products = require("./model/products");
 const productRouter = require("./router/products");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 app.use(express.json());
 app.get("/", (req, res) => {
   res.status(200).send(`<h1>Store API:</h1> <a href="api/v1/products">Product Route</a>`);

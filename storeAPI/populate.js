@@ -5,13 +5,13 @@ const Products = require("./model/products");
 const start = async () => {
   try {
     await connectDB(process.env.MANGO_URI);
-    await Products.deleteMany();
-    await Products.create(jsonProducts);
+    await Products.deleteMany(); // remove any product first
+    await Products.create(jsonProducts); //now create the product using the json products
     console.log("Success!!");
-    process.exit(0);
+    process.exit(0); //everything went well so exit
   } catch (error) {
     console.log(error);
-    process.exit(1);
+    process.exit(1); // something is wrong
   }
 };
 start();
