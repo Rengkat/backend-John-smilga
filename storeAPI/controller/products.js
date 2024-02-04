@@ -1,7 +1,7 @@
 const asyncWrapper = require("../middleware/async");
 const Products = require("../model/products");
 const getProducts = async (req, res) => {
-  const { featured, company, name, sort, field } = req.query;
+  const { featured, company, name, sort, field, limit } = req.query;
   const queryObj = {}; // creating new obj with the query if true
   if (featured) {
     queryObj.featured = featured === "true" ? true : false;
@@ -25,6 +25,9 @@ const getProducts = async (req, res) => {
     const fieldList = sort.split(",").join("");
     result = result.sort(fieldList);
   } else {
+  }
+  if (limit) {
+    result = result.limit(limit); // the limit of data
   }
   const products = await result; // this is to avoid await before sorting
   res.status(200).json({ success: true, data: products });
