@@ -13,11 +13,6 @@ const login = async (req, res) => {
   res.status(200).json({ message: "Account sign up successfully", token });
 };
 const dashboard = async (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new CustomError("No token in headers", 401);
-  }
-  const token = authHeader.split(" ")[1];
   try {
     const decode = jwt.verify(token, process.env.JWT_SECRETE);
     const luckyNum = Math.floor(Math.random() * 100);
